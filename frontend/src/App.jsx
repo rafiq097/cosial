@@ -1,24 +1,22 @@
-/* eslint-disable no-unused-vars */
-// import React, { useState } from 'react'
-import { Button } from "@chakra-ui/button";
 import { Container } from "@chakra-ui/react";
-import { Routes, Route } from "react-router-dom";
-
-import UserPage from "./pages/UserPage.jsx";
-import PostPage from "./pages/PostPage.jsx";
-
-import Header from "./components/Header.jsx";
-
+import { Route, Routes } from "react-router-dom";
+import UserPage from "./pages/UserPage";
+import PostPage from "./pages/PostPage";
+import Header from "./components/Header";
+import HomePage from "./pages/HomePage";
 function App() {
-  return (
-    <Container maxW="620px">
-      <Header />
-      <Routes>
-        <Route path="/:username" element={<UserPage />} />
-        <Route path="/:username/post/:pid" element={<PostPage />} />
-      </Routes>
-    </Container>
-  );
+	return (
+		<Container maxW='620px'>
+			<Header />
+			<Routes>
+				{/* This route added after the tutorial. */}
+				<Route path='/' element={<HomePage />} />
+
+				<Route path='/:username' element={<UserPage />} />
+				<Route path='/:username/post/:pid' element={<PostPage />} />
+			</Routes>
+		</Container>
+	);
 }
 
 export default App;
