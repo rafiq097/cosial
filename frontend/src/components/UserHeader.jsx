@@ -2,23 +2,16 @@ import { Avatar } from "@chakra-ui/avatar";
 import { Box, Flex, Link, Text, VStack } from "@chakra-ui/layout";
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu";
 import { Portal } from "@chakra-ui/portal";
-import { useToast } from "@chakra-ui/react";
+import toast from "react-hot-toast";
 import { BsInstagram } from "react-icons/bs";
 import { CgMoreO } from "react-icons/cg";
 
 const UserHeader = () => {
-	const toast = useToast();
 
 	const copyURL = () => {
 		const currentURL = window.location.href;
 		navigator.clipboard.writeText(currentURL).then(() => {
-			toast({
-				title: "Success.",
-				status: "success",
-				description: "Profile link copied.",
-				duration: 3000,
-				isClosable: true,
-			});
+			toast.success("Profile link copied.");
 		});
 	};
 

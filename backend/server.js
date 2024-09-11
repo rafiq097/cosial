@@ -7,7 +7,7 @@ import userRoutes from "./routes/user.routes.js";
 import postRoutes from "./routes/post.routes.js";
 
 const app = express();
-connectDB();
+// connectDB();
 dotenv.config();
 
 
@@ -23,5 +23,5 @@ app.use("/api/posts", postRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server started at http://localhost:${PORT}`)
+    console.log(`Server started at PORT ${PORT}`)
 });
