@@ -47,6 +47,8 @@ export default function LoginCard() {
 			localStorage.setItem("user-threads", JSON.stringify(data));
 			setUser(data);
 		} catch (error) {
+			setUser(null);
+			lo
 			toast.error(error);
 		}
 	};

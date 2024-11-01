@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
+import { v2 as cloudinary } from "cloudinary";
 
 const getUserProfile = async (req, res) => {
     const { username } = req.params;
@@ -20,7 +21,7 @@ const getUserProfile = async (req, res) => {
 const signupUser = async (req, res) => {
     try {
         const { name, email, username, password } = req.body;
-        const user = await User.findOne({ $or: [{ email }, { username }] }); //poor
+        const user = await User.findOne({ $or: [{ email }, { username }] });
 
         if (user) {
             return res.status(400).json({ message: "User already exists" });
@@ -44,6 +45,8 @@ const signupUser = async (req, res) => {
                 name: newUser.name,
                 email: newUser.email,
                 username: newUser.username,
+                bio: newUser.bio,
+                profilePic: newUser.profilePic,
             });
         }
         else {
@@ -71,6 +74,8 @@ const loginUser = async (req, res) => {
             name: user.name,
             email: user.email,
             username: user.username,
+            bio: user.bio,
+            profilePic: user.profilePic,
         });
     }
     catch (error) {
@@ -123,8 +128,10 @@ const followUnFollowUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-    const { name, email, username, password, profilePic, bio } = req.body;
+    const { name, email, username, password, bio } = req.body;
+    let { profilePic } = req.body;
     const userId = req.user._id;
+
     try {
         let user = await User.findById(userId);
         if (!user)
@@ -138,6 +145,13 @@ const updateUser = async (req, res) => {
             const hashedPassword = await bcrypt.hash(password, salt);
             user.password = hashedPassword;
         }
+        if (profilePic) {
+            if (user.profilePic) {
+                await cloudinary.uploader.destroy(user.profilePic.split("/").pop().split(".")[0]);
+            }
+            const uploadedResponse = await cloudinary.uploader.upload(profilePic);
+            profilePic = uploadedResponse.secure_url;
+        }
 
         user.name = name || user.name;
         user.email = email || user.email;
@@ -146,8 +160,10 @@ const updateUser = async (req, res) => {
         user.bio = bio || user.bio;
 
         user = await user.save();
+		user.password = null;
 
-        res.status(200).json({ message: "Profile Updated Successfully", user });
+        // res.status(200).json({ message: "Profile Updated Successfully", user });
+        res.status(200).json(user);
     }
     catch (err) {
         res.status(500).json({ error: err.message });
