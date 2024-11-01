@@ -13,8 +13,10 @@ const router = express.Router();
 
 router.get("/feed", auth, getFeedPosts);
 router.get("/:id", getPost);
+
 router.post("/create", auth, createPost);
 router.delete("/:id", auth, deletePost);
+
 router.post("/like/:id", auth, likeUnlikePost);
 router.post("/reply/:id", auth, replyToPost);
 
