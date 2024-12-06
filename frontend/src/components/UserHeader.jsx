@@ -1,11 +1,11 @@
+/* eslint-disable react/prop-types */
 import { Avatar } from "@chakra-ui/avatar";
 import { Box, Flex, Link, Text, VStack } from "@chakra-ui/layout";
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu";
 import { Portal } from "@chakra-ui/portal";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 import { BsInstagram } from "react-icons/bs";
 import { CgMoreO } from "react-icons/cg";
-import { useToast } from "@chakra-ui/react";
 import { Button, useToast } from "@chakra-ui/react";
 import { useRecoilValue } from "recoil";
 import userAtom from "../atoms/userAtom";
@@ -21,6 +21,8 @@ const UserHeader = ({ user }) => {
   );
   const showToast = useShowToast();
   const [updating, setUpdating] = useState(false);
+  {console.log(currentUser)}
+      {console.log(user)}
 
   const copyURL = () => {
     const currentURL = window.location.href;
@@ -111,7 +113,7 @@ const UserHeader = ({ user }) => {
       </Flex>
 
       <Text>{user.bio}</Text>
-
+      
       {currentUser._id === user._id && (
         <Link as={RouterLink} to="/update">
           <Button size={"sm"}>Update Profile</Button>
