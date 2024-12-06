@@ -6,6 +6,7 @@ import {
 	likeUnlikePost,
 	replyToPost,
 	getFeedPosts,
+	getUserPosts,
 } from "../controllers/post.controller.js";
 import auth from "../middlewares/auth.js";
 
@@ -13,6 +14,7 @@ const router = express.Router();
 
 router.get("/feed", auth, getFeedPosts);
 router.get("/:id", getPost);
+router.get("/user/:username", getUserPosts);
 
 router.post("/create", auth, createPost);
 router.delete("/:id", auth, deletePost);
