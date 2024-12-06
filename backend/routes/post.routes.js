@@ -17,7 +17,7 @@ router.get("/:id", getPost);
 router.post("/create", auth, createPost);
 router.delete("/:id", auth, deletePost);
 
-router.post("/like/:id", auth, likeUnlikePost);
-router.post("/reply/:id", auth, replyToPost);
+router.put("/like/:id", auth, likeUnlikePost);
+router.put("/reply/:id", auth, replyToPost);
 
 export default router;
