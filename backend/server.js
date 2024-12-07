@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
 import cors from "cors";
 import path from "path";
+import { fileURLToPath } from "url";
 
 import connectDB from "./db/db.js";
 import userRoutes from "./routes/user.routes.js";
@@ -13,6 +14,8 @@ const app = express();
 connectDB();
 dotenv.config();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Middlewares
 app.use(express.json({ limit: "50mb" }));
