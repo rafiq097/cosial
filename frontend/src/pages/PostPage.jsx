@@ -9,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Actions from "../components/Actions";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Comment from "../components/Comment";
 import useGetUserProfile from "../hooks/useGetUserProfile";
 import useShowToast from "../hooks/useShowToast";
@@ -22,7 +22,7 @@ import postsAtom from "../atoms/postsAtom";
 
 const PostPage = () => {
   const { user, loading } = useGetUserProfile();
-  const [post, setPost] = useRecoilState(postsAtom);
+  const [posts, setPosts] = useRecoilState(postsAtom);
   const showToast = useShowToast();
   const { pid } = useParams();
   const currentUser = useRecoilValue(userAtom);
@@ -32,6 +32,8 @@ const PostPage = () => {
 
   useEffect(() => {
     const getPost = async () => {
+      setPosts([]);
+
       try {
         const res = await fetch(`/api/posts/${pid}`);
         const data = await res.json();
@@ -40,14 +42,14 @@ const PostPage = () => {
           return;
         }
         // console.log(data);
-        setPost([data]);
+        setPosts([data]);
       } catch (error) {
         showToast("Error", error.message, "error");
       }
     };
 
     getPost();
-  }, [showToast, pid, setPost]);
+  }, [showToast, pid, setPosts]);
 
   const handleDeletePost = async () => {
     try {
@@ -75,7 +77,9 @@ const PostPage = () => {
     );
   }
 
-  if (!currentPost) return null;
+  if (!currentPost)
+    return null;
+  console.log("currentPost", currentPost);
 
   return (
     <>
