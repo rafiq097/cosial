@@ -9,6 +9,7 @@ import { fileURLToPath } from "url";
 import connectDB from "./db/db.js";
 import userRoutes from "./routes/user.routes.js";
 import postRoutes from "./routes/post.routes.js";
+import messageRoutes from "./routes/messageRoutes.js";
 
 const app = express();
 connectDB();
@@ -34,7 +35,9 @@ app.use(cors({
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/messages", messageRoutes);
 
+// Cloudinary
 cloudinary.config({
 	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
 	api_key: process.env.CLOUDINARY_API_KEY,
